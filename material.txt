@@ -1,0 +1,72 @@
+mat fuel_cern	6.97204E-02
+92234.03c	3.58801E-05
+92235.03c	4.22679E-03
+92238.03c	1.89769E-02
+ 8016.03c	4.64791E-02
+ 5010.03c	3.4412E-07
+ 5011.03c	1.3938E-06
+
+
+mat matrix 	sum  moder grph 6000
+6000.03c	0.08363
+5010.03c	1.8301E-08
+5011.03c	7.4596E-08
+therm grph gre7.00t
+
+
+mat cool     -1.105340    moder lwtr 1001 moder hwtr 1002
+ 8016.03c    -7.98867E-1 
+ 1002.03c    -2.01133E-1
+
+therm lwtr lwe7.00t
+therm hwtr hwe7.00t
+
+
+mat He -0.00050106
+    2003.03c 1
+
+
+mat m270 -7.82000E+00
+ %6000.03c  -5.00000E-03
+%26000.03c  -9.95000E-01
+
+ 6012.03c  -4.94208E-03
+26054.03c  -5.61733E-02
+26056.03c  -9.14420E-01
+26057.03c  -2.14957E-02
+26058.03c  -2.91082E-03
+
+
+mat case -11.35
+    82000.03c 1
+
+therm pepl poly.10t
+mat pol -0.95    moder pepl 1001
+1001.03c  0.666590
+1002.03c  0.000077
+6012.03c  0.333333
+
+
+ mat plast  -8.65
+Cd-106.03c  0.012500
+Cd-108.03c  0.008900
+Cd-110.03c  0.124900
+Cd-111.03c  0.128000
+Cd-112.03c  0.241300
+Cd-113.03c  0.122200
+Cd-114.03c  0.287300
+Cd-116.03c  0.074900
+
+mat boron -2.3
+B-nat.03c 1
+
+mix stop
+pol -0.95
+boron -0.05
+
+mat st      -2.7
+13027.03c   1
+
+set decomp 1 B
+
+set acelib "/home/SHARED/Serpent/xsdata/ENDFB7/sss_endfb7_ext.xsdata"

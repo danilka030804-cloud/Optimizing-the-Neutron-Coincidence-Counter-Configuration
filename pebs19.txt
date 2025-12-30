@@ -1,0 +1,156 @@
+mat fuel_matrix sum moder grph 6000
+6000.03c    0.093517
+5010.03c  1.9922E-8
+5011.03c  8.1203E-8
+14000.03c  3.7007E-4
+
+mat air sum   
+8016.03c 1.05200E-05    
+7014.03c 3.91150E-05   
+6000.03c 8.24430E-09   
+18040.03c 2.34690E-07
+
+mat al -2.6989
+Al-27.03c 1.
+
+% enr. 20.9%
+mat fuel_old1 sum
+92234.03c 4.5789E-5
+92235.03c 4.8394E-3
+92236.03c 3.7334E-5
+92238.03c 0.017991
+8016.03c  0.045828
+
+% enr. 20.5%
+mat fuel_old2 sum
+92234.03c  4.5115E-05
+92235.03c  4.6747E-03
+92236.03c  3.6785E-05
+92238.03c  1.7819E-02
+8016.03c   4.5151E-02
+
+% enr. 19.6%
+mat fuel_old sum
+92234.03c  4.5116E-05
+92235.03c  4.4696E-03
+92236.03c  3.6785E-05
+92238.03c  1.8022E-02
+8016.03c   4.5147E-02
+
+
+
+surf  sample_cavity cyl 0 0 11.0 -2. 9.7
+
+surf  sample_cavity_1 cyl 0 0 11.0 -2. 1.9
+surf  sample_cavity_2 cyl 0 0 11.0 1.9 5.8
+surf  sample_cavity_3 cyl 0 0 11.0 5.8 9.7
+
+surf  holder_disk cyl 0 0 3.5 -1.75 -1.65
+
+
+% Pebbles
+
+
+%surf pebs1 sph 0.0 0.0 0.0 2.9925
+surf pebs sph 0.0 0.0 0.0 1.75
+
+surf 50 inf
+cell 100 600 fuel_matrix  -50
+
+particle 14
+fuel_old    0.02555
+fuel_matrix
+
+pbed 100 600 "part1.txt"
+
+cell sp1 s1 fill 100 -pebs
+
+cell 10 P fill s1 -pebs
+cell 12 P air  pebs holder_disk
+cell 14 P al  -holder_disk pebs
+
+
+% Empty cell Al list+hole
+
+cell 110 V air -pebs 
+cell 112 V air  pebs holder_disk
+%cell 113 V air  -holder_hole
+cell 114 V al  -holder_disk pebs
+
+
+
+% Empty cell Al list
+
+cell 212 A air  holder_disk
+cell 214 A al  -holder_disk 
+
+
+
+% Square
+
+%lat 20  11  0. 0. 0. 8 8 1 3.5 3.5 3.5
+%V V V V V V V V
+%V V V V V V V V
+%V V V V V V V V
+%V V V P P V V V
+%V V V P P V V V
+%V V V V V V V V
+%V V V V V V V V
+%V V V V V V V V
+
+% Ring
+
+%lat 20 4 0. 0. 1
+%3 2.2 0. P P P
+
+% Hexagon
+
+lat 20 2 0. 0. 9 9 3.55
+A A A A A A A A A
+ A A A A A A A A A
+  A A A A V V V A A
+   A A A V V V V A A
+    A A V V V V V A A
+     A A V V V V A A A
+      A A V V V A A A A
+       A A A A A A A A A
+        A A A A A A A A A
+
+
+lat 21 2 0. 0. 9 9 3.55
+A A A A A A A A A
+ A A A A A A A A A
+  A A A A P P P A A
+   A A A P P P P A A
+    A A P P P P P A A
+     A A P P P P A A A
+      A A P P P A A A A
+       A A A A A A A A A
+        A A A A A A A A A
+
+
+lat 22 2 0. 0. 9 9 3.55
+A A A A A A A A A
+ A A A A A A A A A
+  A A A A V V V A A
+   A A A V V V V A A
+    A A V V V V V A A
+     A A V V V V A A A
+      A A V V V A A A A
+       A A A A A A A A A
+        A A A A A A A A A
+
+
+trans U 20 0. 0. -0.05
+cell list_1 77 fill 20  -sample_cavity_1
+cell vo_1 77 air #list_1 #list_2 #list_3
+
+trans U 21 0. 0. 3.85
+cell list_2 77 fill 21  -sample_cavity_2
+
+trans U 22 0. 0. 7.75
+cell list_3 77 fill 22  -sample_cavity_3
+
+%cell voids_1 0 fill 77  -sample_cavity_1
+%cell voids_2 0 fill 78  -sample_cavity_2
+%cell voids_3 0 fill 79  -sample_cavity_3
